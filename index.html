@@ -48,7 +48,7 @@ button{font-family:inherit;cursor:pointer;border:0;border-radius:12px;color:#fff
 #vov video{width:100%;height:100%;max-width:100vmin;max-height:100vmin;object-fit:contain}
 #vov small{position:absolute;bottom:12px;width:100%;text-align:center;opacity:.6}
 </style></head><body>
-<div id="app"><header><h1>💸散財ガチャ💸</h1><div class="bal">所持ゴールド <b id="bal"></b><br>累計散財 <b id="spent"></b></div><div><button id="refill">💰無限チャージ</button> <button id="bgmBtn" style="padding:8px 10px;background:#ffffff26">🎵BGM ON</button> <button id="vidBtn" style="padding:8px 10px;background:#ffffff26">🎬動画演出 ON</button> <button id="dbgBtn" title="デバッグ表示" style="padding:6px 8px;background:#ffffff14;font-size:12px">⚙</button> <input id="vol" type="range" min="0" max="100" value="45" style="width:80px;vertical-align:middle" aria-label="音量"></div></header>
+<div id="app"><header><h1>💸散財ガチャ💸</h1><div class="bal">所持ゴールド <b id="bal"></b><br>累計散財 <b id="spent"></b></div><div><button id="refill">💰無限チャージ</button> <button id="bgmBtn" style="padding:8px 10px;background:#ffffff26">🎵BGM ON</button> <button id="vidBtn" style="padding:8px 10px;background:#ffffff26">🎬動画演出 ON</button> <input id="vol" type="range" min="0" max="100" value="45" style="width:80px;vertical-align:middle" aria-label="音量"></div></header>
 <div class="tabs"><button data-t="gacha" class="on">ガチャ</button><button data-t="shop">ショップ</button><button data-t="col">コレクション</button></div>
 <section id="gacha"><div class="big">✨深淵プレミアムガチャ✨</div><div class="stats">UR 0.1% / SSR 0.3% / SR 5% / R 34.6% / N 60%　※全部架空・実費0円</div>
 <div class="pull"><button id="p1">1回引く<small>💎 3,000 G</small></button><button id="p10">10連引く<small>💎 30,000 G（SR以上1枠確定）</small></button></div><div class="stats" id="pullcount"></div><div style="text-align:center;margin-top:28px"><button id="histClear" title="引いた回数・累計散財などの履歴と統計を削除します（コレクションは消えません）" style="padding:5px 12px;font-size:12px;background:#ffffff14;border:1px solid #ffffff33;color:#ccc">🗑 履歴削除</button></div></section>
@@ -186,11 +186,5 @@ $("vidBtn").onclick=e=>{e.stopPropagation();setFlag("vid",!ST.vid)};
 const unlock=()=>{try{ac();startBGM()}catch(x){}};
 ["pointerdown","touchstart","keydown","click"].forEach(t=>document.addEventListener(t,unlock,{capture:true,passive:true}));
 prepVid();
-let dbgOn=false,dbgEl=null;function toggleDebug(){dbgOn=!dbgOn;if(dbgEl)dbgEl.style.display=dbgOn?"block":"none"}
-{const d=document.createElement("div");dbgEl=d;d.style.cssText="display:none;position:fixed;left:4px;bottom:4px;z-index:99;background:#000c;color:#0f0;font:11px monospace;padding:4px;max-width:96vw;pointer-events:none;white-space:pre-wrap";document.body.appendChild(d);
-setInterval(()=>{const v=$("vid");d.textContent=`ST.vid=${ST.vid} ST.bgm=${ST.bgm} LS vid=${LS.get(LSK.vid)} bgm=${LS.get(LSK.bgm)}\nvideo ready=${v.readyState} net=${v.networkState} err=${v.error&&v.error.code} src=${v.src.slice(0,5)} t=${v.currentTime.toFixed(2)} paused=${v.paused}\nlast: ${LASTPULL}\nlog: ${VIDLOG.slice(-6).join(" | ")}`},400)}
-try{if(/[?&]debug=1/.test(location.search))toggleDebug()}catch(e){}
-{let tc=0,tt=0;document.querySelector("h1").addEventListener("click",()=>{tc++;clearTimeout(tt);tt=setTimeout(()=>tc=0,1500);if(tc>=5){tc=0;toggleDebug()}})}
-$("dbgBtn").onclick=e=>{e.stopPropagation();toggleDebug()};
 ui();
 </script></body></html>
